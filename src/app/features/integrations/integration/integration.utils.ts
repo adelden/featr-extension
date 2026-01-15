@@ -1,15 +1,16 @@
+import { isFigmaUrl, getFigmaIntegration } from '../figma/figma.utils';
+import { isSketchUrl, getSketchIntegration } from '../sketch/sketch.utils';
+import { isNotionUrl, getNotionIntegration } from '../notion/notion.utils';
+import { isConfluenceUrl, getConfluenceIntegration } from '../confluence/confluence.utils';
+import { isJiraUrl, getJiraIntegration } from '../jira/jira.utils';
+import { isTrelloUrl, getTrelloIntegration } from '../trello/trello.utils';
+import { isGitUrl, getGitIntegration } from '../git/git.utils';
+import { isLocalhostUrl, getLocalhostIntegration } from '../localhost/localhost.utils';
 import {
   Integration,
+  IntegrationGroup,
   IntegrationType,
-} from '../../../core/models/project.model';
-import { isFigmaUrl } from '../figma/figma.utils';
-import { isSketchUrl } from '../sketch/sketch.utils';
-import { isNotionUrl } from '../notion/notion.utils';
-import { isConfluenceUrl } from '../confluence/confluence.utils';
-import { isJiraUrl } from '../jira/jira.utils';
-import { isTrelloUrl } from '../trello/trello.utils';
-import { isGitUrl } from '../git/git.utils';
-import { isLocalhostUrl } from '../localhost/localhost.utils';
+} from '../../../core/models/integration.model';
 
 const getIntegrationTypeFromUrl = (url: string): IntegrationType | null => {
   if (isLocalhostUrl(url)) {
@@ -38,8 +39,6 @@ const getIntegrationTypeFromUrl = (url: string): IntegrationType | null => {
   }
   return null;
 };
-
-export type IntegrationGroup = 'design' | 'docs' | 'project-management' | 'versioning' | 'dev' | 'custom';
 
 export const getIntegrationGroup = (
   integrationType: IntegrationType
@@ -88,5 +87,30 @@ export const getIntegrationLabel = (
       return 'Localhost';
     default:
       return integrationType;
+  }
+};
+
+export const getIntegration = (type: IntegrationType): Integration | null => {
+  switch (type) {
+    case 'localhost':
+      return getLocalhostIntegration();
+    case 'figma':
+      return getFigmaIntegration();
+    case 'sketch':
+      return getSketchIntegration();
+    case 'notion':
+      return getNotionIntegration();
+    case 'confluence':
+      return getConfluenceIntegration();
+    case 'jira':
+      return getJiraIntegration();
+    case 'trello':
+      return getTrelloIntegration();
+    case 'git':
+      return getGitIntegration();
+    case 'custom':
+      return null;
+    default:
+      return null;
   }
 };

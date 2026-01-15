@@ -1,28 +1,4 @@
-export const INTEGRATIONS = [
-  // DESIGN
-  'figma',
-  'sketch',
-  // DOCS
-  'notion',
-  'confluence',
-  // TASK MANAGERS
-  'jira',
-  'trello',
-  // VERSIONING
-  'git',
-  // DEV
-  'localhost',
-  // CUSTOM
-  'custom',
-] as const;
-
-export type IntegrationType = (typeof INTEGRATIONS)[number]; // | undefined;
-
-export interface Integration {
-  type: IntegrationType;
-  baseUrl: string;
-  enabled: boolean;
-}
+import { Integration } from './integration.model';
 
 export interface Projet {
   id: string; // TODO: implement uuid lib ?

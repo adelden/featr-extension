@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
-import {
-  INTEGRATIONS,
-  IntegrationType,
-} from '../../../../core/models/project.model';
 import { getIntegrationLabel } from '../integration.utils';
+import {
+  IntegrationType,
+  INTEGRATIONS,
+} from '../../../../core/models/integration.model';
 
 @Component({
   selector: 'app-integration-select',
