@@ -218,7 +218,7 @@ Project
 ├─ id: string (UUID)
 ├─ name: string ("MultiPost Extension")
 ├─ tools
-│  ├─ taskManager
+│  ├─ taskManager`
 │  │  ├─ type: "trello" | "jira" | "linear" | "custom"
 │  │  ├─ baseUrl: string ("https://trello.com/b/abc123")
 │  │  └─ enabled: boolean
