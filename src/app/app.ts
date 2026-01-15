@@ -1,9 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { IntegrationForm } from './features/integrations/integration/integration-form/integration-form';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, IntegrationForm],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

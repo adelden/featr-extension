@@ -1,1 +1,12 @@
-<p>integration-select works!</p>
+<div class="card flex justify-center">
+  <p-select
+    [options]="integrationsItems"
+    [(ngModel)]="selectedIntegration"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Select an Integration"
+    [showClear]="true"
+    [checkmark]="true"
+    class="w-full md:w-96"
+  />
+</div>

@@ -34,3 +34,27 @@ const getIntegrationTypeFromUrl = (url: string): IntegrationType | null => {
   }
   return null;
 };
+
+// TODO: remove when i118n ?
+export const getIntegrationLabel = (
+  integrationType: IntegrationType
+): string => {
+  switch (integrationType) {
+    case 'figma':
+      return 'Figma';
+    case 'sketch':
+      return 'Sketch';
+    case 'notion':
+      return 'Notion';
+    case 'confluence':
+      return 'Confluence';
+    case 'jira':
+      return 'Jira';
+    case 'trello':
+      return 'Trello';
+    case 'git':
+      return 'Git';
+    default:
+      return integrationType;
+  }
+};
