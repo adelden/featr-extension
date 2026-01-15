@@ -1,7 +1,8 @@
 <div class="card flex justify-center">
   <p-select
     [options]="integrationsItems"
-    [(ngModel)]="selectedIntegration"
+    [(ngModel)]="internalValue"
+    (ngModelChange)="onValueChange($event)"
     optionLabel="label"
     optionValue="value"
     placeholder="Select an Integration"

@@ -1,4 +1,73 @@
 <div class="integration-form-container">
-  <h2>Integration Form</h2>
-  <app-integration-select />
+  <h2>Add Integration</h2>
+
+  <form class="integration-form" (ngSubmit)="onSubmit()">
+    <!-- Integration Type Select -->
+    <div class="form-field">
+      <label for="integration-type" class="form-label">Integration Type</label>
+      <app-integration-select
+        [(selectedIntegration)]="selectedIntegrationType"
+        (selectedIntegrationChange)="onIntegrationTypeChange($event)"
+      ></app-integration-select>
+    </div>
+
+    <!-- Base URL Input -->
+    @if (selectedIntegrationType()) {
+      <div class="form-field">
+        <p-floatlabel>
+          <input
+            id="base-url"
+            type="url"
+            pInputText
+            [(ngModel)]="baseUrl"
+            name="baseUrl"
+            class="w-full"
+            required
+          />
+          <label for="base-url">Base URL</label>
+        </p-floatlabel>
+        <small class="form-help">Enter the base URL for {{ integrationLabel() }}</small>
+      </div>
+
+      <!-- Enabled Toggle -->
+      <div class="form-field">
+        <div class="flex items-center gap-3">
+          <p-toggleswitch
+            [(ngModel)]="enabled"
+            inputId="enabled"
+            name="enabled"
+          />
+          <label for="enabled" class="form-label mb-0">Enable integration</label>
+        </div>
+        <small class="form-help">Toggle to enable or disable this integration</small>
+      </div>
+
+      <!-- Integration Info -->
+      @if (selectedIntegration()) {
+        <div class="integration-info">
+          <p><strong>Type:</strong> {{ selectedIntegration()?.type }}</p>
+          <p><strong>Label:</strong> {{ selectedIntegration()?.label }}</p>
+          <p><strong>Group:</strong> {{ selectedIntegration()?.group }}</p>
+          <p><strong>Default URL:</strong> {{ selectedIntegration()?.baseUrl }}</p>
+        </div>
+      }
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <p-button
+          label="Reset"
+          severity="secondary"
+          [outlined]="true"
+          type="button"
+          (onClick)="onReset()"
+        />
+        <p-button
+          label="Add Integration"
+          severity="primary"
+          type="submit"
+          [disabled]="!isFormValid()"
+        />
+      </div>
+    }
+  </form>
 </div>
