@@ -10,6 +10,8 @@ export const INTEGRATIONS = [
   'trello',
   // VERSIONING
   'git',
+  // DEV
+  'localhost',
   // CUSTOM
   'custom',
 ] as const;
