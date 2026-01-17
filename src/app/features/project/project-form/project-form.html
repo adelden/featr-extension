@@ -1,1 +1,52 @@
-<p>project-form works!</p>
+<div class="project-form-container">
+  <h2>Add Project</h2>
+
+  <form class="project-form" (ngSubmit)="onSubmit()">
+    <!-- Project Name -->
+    <div class="form-field">
+      <p-floatlabel>
+        <input
+          id="project-name"
+          type="text"
+          pInputText
+          [(ngModel)]="name"
+          name="name"
+          class="w-full"
+          required
+        />
+        <label for="project-name">Project Name</label>
+      </p-floatlabel>
+      <small class="form-help">Enter a unique name for your project</small>
+    </div>
+
+    <!-- Active Toggle -->
+    <div class="form-field">
+      <div class="flex items-center gap-3">
+        <p-toggleswitch
+          [(ngModel)]="isActive"
+          inputId="is-active"
+          name="isActive"
+        />
+        <label for="is-active" class="form-label mb-0">Active Project</label>
+      </div>
+      <small class="form-help">Toggle to set this project as active</small>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <p-button
+        label="Reset"
+        severity="secondary"
+        [outlined]="true"
+        type="button"
+        (onClick)="onReset()"
+      />
+      <p-button
+        label="Create Project"
+        severity="primary"
+        type="submit"
+        [disabled]="!isFormValid()"
+      />
+    </div>
+  </form>
+</div>

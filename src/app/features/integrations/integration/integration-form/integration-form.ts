@@ -1,11 +1,14 @@
 import { Component, signal, computed } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IntegrationSelect } from '../integration-select/integration-select';
-import { Integration, IntegrationType } from '../../../../core/models/integration.model';
+import {
+  Integration,
+  IntegrationType,
+} from '../../../../core/models/integration.model';
 import { getIntegration, getIntegrationLabel } from '../integration.utils';
 
 @Component({
@@ -13,6 +16,7 @@ import { getIntegration, getIntegrationLabel } from '../integration.utils';
   imports: [
     IntegrationSelect,
     FormsModule,
+    ReactiveFormsModule,
     InputTextModule,
     ToggleSwitchModule,
     ButtonModule,
