@@ -1,25 +1,25 @@
 <div class="integration-form-container">
   <h2>Add Integration</h2>
 
-  <form class="integration-form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" class="integration-form" (ngSubmit)="onSubmit()">
     <!-- Integration Type Select -->
     <div class="form-field">
       <label for="integration-type" class="form-label">Integration Type</label>
       <app-integration-select
-        [(selectedIntegration)]="selectedIntegrationType"
+        [selectedIntegration]="form.controls.integrationType.value ?? undefined"
         (selectedIntegrationChange)="onIntegrationTypeChange($event)"
       ></app-integration-select>
     </div>
 
     <!-- Base URL Input -->
-    @if (selectedIntegrationType()) {
+    @if (form.controls.integrationType.value) {
       <div class="form-field">
         <p-floatlabel>
           <input
+            formControlName="baseUrl"
             id="base-url"
             type="url"
             pInputText
-            [(ngModel)]="baseUrl"
             name="baseUrl"
             class="w-full"
             required
@@ -33,7 +33,7 @@
       <div class="form-field">
         <div class="flex items-center gap-3">
           <p-toggleswitch
-            [(ngModel)]="enabled"
+            formControlName="enabled"
             inputId="enabled"
             name="enabled"
           />
@@ -65,7 +65,7 @@
           label="Add Integration"
           severity="primary"
           type="submit"
-          [disabled]="!isFormValid()"
+          [disabled]="!form.valid"
         />
       </div>
     }

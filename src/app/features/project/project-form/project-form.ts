@@ -1,5 +1,11 @@
 import { Component, signal, computed } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ButtonModule } from 'primeng/button';
@@ -20,28 +26,17 @@ import { Projet } from '../../../core/models/project.model';
   styleUrl: './project-form.scss',
 })
 export class ProjectForm {
-  name = signal<string>('');
-  isActive = signal<boolean>(true);
-
-  // Computed signal pour vérifier si le formulaire est valide
-  isFormValid = computed<boolean>(() => {
-    return this.name().trim().length > 0;
+  readonly form = new FormGroup({
+    name: new FormControl<string>('', Validators.required),
+    isActive: new FormControl<boolean>(true),
   });
 
   onSubmit() {
-    if (!this.isFormValid()) return;
-
-    const project: Omit<Projet, 'id' | 'createdAt'> = {
-      name: this.name(),
-      isActive: this.isActive(),
-    };
-
-    console.log('Project submitted:', project);
+    console.log('Project submitted:', this.form.value);
     // TODO: Émettre l'événement ou appeler un service
   }
 
   onReset() {
-    this.name.set('');
-    this.isActive.set(true);
+    // this.name.set('');
   }
 }

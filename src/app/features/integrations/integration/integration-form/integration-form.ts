@@ -1,5 +1,11 @@
-import { Component, signal, computed } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, computed } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ButtonModule } from 'primeng/button';
@@ -10,6 +16,8 @@ import {
   IntegrationType,
 } from '../../../../core/models/integration.model';
 import { getIntegration, getIntegrationLabel } from '../integration.utils';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { startWith } from 'rxjs';
 
 @Component({
   selector: 'app-integration-form',
@@ -26,49 +34,54 @@ import { getIntegration, getIntegrationLabel } from '../integration.utils';
   styleUrl: './integration-form.scss',
 })
 export class IntegrationForm {
-  selectedIntegrationType = signal<IntegrationType | undefined>(undefined);
-  baseUrl = signal<string>('');
-  enabled = signal<boolean>(true);
+  readonly form = new FormGroup({
+    integrationType: new FormControl<IntegrationType | undefined>(undefined, Validators.required),
+    baseUrl: new FormControl<string>('', Validators.required),
+    enabled: new FormControl<boolean>(true),
+  });
+
+  // Signal from form control for reactive template usage
+  private readonly integrationType = toSignal(
+    this.form.controls.integrationType.valueChanges.pipe(
+      startWith(this.form.controls.integrationType.value)
+    )
+  );
 
   // Computed signal pour obtenir l'intégration basée sur le type sélectionné
   selectedIntegration = computed<Integration | null>(() => {
-    const type = this.selectedIntegrationType();
+    const type = this.integrationType();
     if (!type) return null;
     return getIntegration(type);
   });
 
   // Computed signal pour le label
   integrationLabel = computed<string>(() => {
-    const type = this.selectedIntegrationType();
+    const type = this.integrationType();
     return type ? getIntegrationLabel(type) : '';
   });
 
-  // Computed signal pour vérifier si le formulaire est valide
-  isFormValid = computed<boolean>(() => {
-    return !!this.selectedIntegrationType() && this.baseUrl().trim().length > 0;
-  });
-
   onIntegrationTypeChange(type: IntegrationType | undefined) {
-    this.selectedIntegrationType.set(type);
+    this.form.controls.integrationType.setValue(type);
 
     // Pré-remplir le baseUrl avec l'URL par défaut de l'intégration
     if (type) {
       const integration = getIntegration(type);
       if (integration) {
-        this.baseUrl.set(integration.baseUrl);
+        this.form.controls.baseUrl.setValue(integration.baseUrl);
       }
     }
   }
 
   onSubmit() {
-    if (!this.isFormValid()) return;
+    if (!this.form.valid) return;
 
+    const formValue = this.form.value;
     const integration: Integration = {
-      type: this.selectedIntegrationType()!,
+      type: formValue.integrationType!,
       label: this.integrationLabel(),
       group: this.selectedIntegration()?.group || 'custom',
-      baseUrl: this.baseUrl(),
-      enabled: this.enabled(),
+      baseUrl: formValue.baseUrl!,
+      enabled: formValue.enabled!,
     };
 
     console.log('Integration submitted:', integration);
@@ -76,8 +89,10 @@ export class IntegrationForm {
   }
 
   onReset() {
-    this.selectedIntegrationType.set(undefined);
-    this.baseUrl.set('');
-    this.enabled.set(true);
+    this.form.reset({
+      integrationType: undefined,
+      baseUrl: '',
+      enabled: true,
+    });
   }
 }

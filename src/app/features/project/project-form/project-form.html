@@ -1,15 +1,15 @@
 <div class="project-form-container">
   <h2>Add Project</h2>
 
-  <form class="project-form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" class="project-form" (ngSubmit)="onSubmit()">
     <!-- Project Name -->
     <div class="form-field">
       <p-floatlabel>
         <input
+            formControlName="name"
           id="project-name"
           type="text"
           pInputText
-          [(ngModel)]="name"
           name="name"
           class="w-full"
           required
@@ -23,7 +23,7 @@
     <div class="form-field">
       <div class="flex items-center gap-3">
         <p-toggleswitch
-          [(ngModel)]="isActive"
+        formControlName="isActive"
           inputId="is-active"
           name="isActive"
         />
@@ -45,7 +45,7 @@
         label="Create Project"
         severity="primary"
         type="submit"
-        [disabled]="!isFormValid()"
+        [disabled]="!form.valid"
       />
     </div>
   </form>
