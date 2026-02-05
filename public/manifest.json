@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Featr",
+  "version": "1.0.0",
+  "description": "Feature context manager for developers",
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "tabGroups",
+    "idle",
+    "notifications",
+    "sidePanel",
+    "nativeMessaging"
+  ],
+
+  "side_panel": {
+    "default_path": "index.html"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_title": "Open Featr"
+  }
+}

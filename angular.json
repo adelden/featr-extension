@@ -44,6 +44,10 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": {
+              "base": "dist",
+              "browser": "featr-extension"
+            },
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -74,7 +78,7 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "none"
             },
             "development": {
               "optimization": false,

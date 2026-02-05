@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { IntegrationForm } from './features/integrations/integration/integration-form/integration-form';
-import { ProjectForm } from './features/project/project-form/project-form';
+import { Component, inject } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { DaemonService } from './core/services/daemon.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, IntegrationForm, ProjectForm],
+  imports: [ButtonModule, CardModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App {
+  protected readonly daemon = inject(DaemonService);
+
+  onPing(): void {
+    this.daemon.ping();
+  }
+}

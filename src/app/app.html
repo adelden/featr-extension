@@ -1,4 +1,19 @@
 <div class="app-container">
-  <app-project-form />
-  <app-integration-form />
+  <p-card header="Featr">
+    <div class="content">
+      <p-button label="Ping Daemon" (onClick)="onPing()" />
+
+      @if (daemon.lastResponse(); as response) {
+        <div class="response success">
+          {{ response.message }}
+        </div>
+      }
+
+      @if (daemon.lastError(); as error) {
+        <div class="response error">
+          {{ error }}
+        </div>
+      }
+    </div>
+  </p-card>
 </div>
